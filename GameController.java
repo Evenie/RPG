@@ -12,22 +12,31 @@ public class GameController {
 	/* Returns a Character object with the given name as found in the file at the provided path.
      * Assumes all character names are unique.
 	 */				 
-	public Character getCharacter(String path, String name) throws IOException {
+	public Character getCharacter(String path, String name) {
+		Scanner reader = null;
 		Character c = null;
-		File playerData = new File(path);
-		Scanner reader = new Scanner(playerData);
-		while (reader.hasNextLine()) {
-			String[] playerInfo = reader.nextLine().split(",");
-			if(playerInfo[0].equals(name)) {
-				c = createCharacter(playerInfo);
-			}	
+		File playerData = null;
+		while (c == null) {
+			playerData = new File(path); //potentially raises an unchecked exception
+			try {	
+				reader = new Scanner(playerData);
+			} catch (FileNotFoundException e) {
+				path = getNewPath(path);
+			}
+			if (reader != null) {
+				while (reader.hasNextLine()) {
+					String[] playerInfo = reader.nextLine().split(",");
+					if(playerInfo[0].equals(name)) {
+						c = createCharacter(playerInfo);
+					}	
+				}
+			}
 		}
-		reader.close();
-		return c;	
+		return c;
 	}
 	
 	public void takeTurn(Character first, Character second) {
-			first.attack(second);	
+		first.attack(second);	
 	}
 	
 	public void reviveCharacter(Character c) {
@@ -35,6 +44,13 @@ public class GameController {
 	}
 	
 	//Auxilliary methods
+	
+	private String getNewPath(String path) {
+		System.out.println("The file at " + path + " was not found.");
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Enter the correct path to the character file");
+		return reader.nextLine();
+	}
 	
 	private Character createCharacter(String[] playerInfo) {
 		Character c = null;
@@ -56,6 +72,5 @@ public class GameController {
 		}
 		return c;			
 	}
-	
 
 }

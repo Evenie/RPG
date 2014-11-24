@@ -1,16 +1,18 @@
 package RPG;
 
 import java.io.IOException;
+import java.util.Scanner;
 
+/*
+ * args[0] - path
+ * args[1] - name 1
+ */
 public class RPGTest {
-	
-	public static void main(String[] args) throws IOException{
-		
 		GameController game = new GameController();
-		Character c = game.getCharacter("/Users/Evenie/Desktop/RPG/Characters.txt", "Bob");
-		Character d = game.getCharacter("/Users/Evenie/Desktop/RPG/Characters.txt", "Mob");
+		Character c = game.getCharacter(args[0], args[1]);
 		System.out.println(c.name());
-		System.out.println(d.name());
+		
 	}
+		
 
 }

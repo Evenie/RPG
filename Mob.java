@@ -23,6 +23,6 @@ public class Mob extends AbstractCharacter {
 	}
 	
 	public void attack(Character q) {
-		
+		// Need to implement this still!
 	}
 }

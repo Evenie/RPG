@@ -40,9 +40,13 @@ public abstract class AbstractCharacter implements Character {
 		
 	}
 	
-	//commands
-	public void changeName(String newName){
-		name = newName;
+	public boolean equals(Object obj) {
+		boolean equal = false;
+		if (obj instanceof Character) {
+			Character casted = (Character)obj;
+			equal = name.equals(casted.name());
+		}
+		return equal;
 	}
 	
 	public void changeWeapon(Weapon newWeapon) {
@@ -50,8 +54,6 @@ public abstract class AbstractCharacter implements Character {
 	}
 	
 	public void takeDamage(int damage) {
-		//handling the error case may obfuscate a problem in the client
-		damage = Math.abs(damage);
 		if(damage >= hp) {
 			hp = 0;
 		}
